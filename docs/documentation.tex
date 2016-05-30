@@ -1,0 +1,164 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{breakurl}
+
+\title{The Belcher Diagnostic Test for  \LaTeX}
+\author{Carlos Barreto}
+
+
+%%%%% commands added automatically to highlight words
+\RequirePackage{xcolor}
+\definecolor{green}{rgb}{0,.9,.15}
+\definecolor{violet}{rgb}{.8,.12,.86}
+\newcommand{\BDTRed}[1]{{\color{red}#1}}
+\newcommand{\BDTBlue}[1]{{\color{blue}#1}}
+\newcommand{\BDTPurple}[1]{{\color{violet}#1}}
+\newcommand{\BDTOrange}[1]{{\color{orange!50!yellow}#1}}
+\newcommand{\BDTGreen}[1]{{\color{green}#1}}
+\newcommand{\BDTBrown}[1]{{\color{brown!80!red}#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\maketitle
+
+
+
+\section{Introduction}
+
+In 2009, Wendy Laura Belcher published \emph{Writing Your Journal Article in Twelve Weeks: A Guide to Academic Publishing Success (SAGE)} \cite{belcher2009writing}, in which she invented a method to improve academic writing called the \emph{Belcher Diagnostic Test}, which is copyrighted by her. The test consists of highlighting particular words with different colors in order to help authors detect where they might improve their writing, making it smoother, clearer, and tighter. 
+
+\emph{BDT\_latex.py} is a program that automates the Belcher Diagnostic Test for \LaTeX{} documents. The program is designed to implement the test on projects that use multiple files, such as \TeX{} files or images. 
+%
+\emph{Writing Your Journal Article in Twelve Weeks: A Guide to Academic Publishing Success} provides the only instructions for understanding and correcting the problems identified by the Belcher Diagnostic Test; please do not post them with this code.
+
+For questions about the test itself, contact her at \url{wbelcher@ucla.edu};
+for questions about the program, contact me at \url{carlos.barretosuarez@utdallas.edu}.
+
+The following is the list of words that are highlighted:
+\begin{description}
+ \item[Words in \BDTRed{red}:]  `and', `or'
+ \item[Words in \BDTBlue{blue}:] `there', `it', `that', `which', `who'
+ \item[Words in \BDTPurple{purple}:] `by', `of', `to', `for', `toward', `on', `at', `from', `in', `with', `as'
+ \item[Words in \BDTOrange{orange}:] `this', `these', `those', `their', `them', `they', `its'
+ \item[Words in \BDTGreen{green}:] `is', `are', `was', `were', `am', `be', `being', `been', `have', `has', "hasn't", "haven't", `having', `did', `does', "don't", `doing', `make', `makes', `making', `provide', `perform', `get', `seem', `serve'
+ 
+ Words ending in: `ent', `ence', `ion', `ize', `ed'
+ 
+ \item[Words in \BDTBrown{brown}:] `not', `very'
+
+ Words ending in: `ly'
+\end{description}
+
+
+
+\section{Usage}
+
+The implementation is made in Python and can be executed with
+%
+\begin{verbatim}
+python BDT_latex.py [options] {file.tex} 
+\end{verbatim}
+%
+The script creates new \TeX{} files with suffix `\_BDT'  (e.g.,  \verb|file_BDT.tex|) in the same directory of the original file, highlighting words with the following commands:
+%
+\verb|\BDTRed|,
+\verb|\BDTBlue|,
+\verb|\BDTPurple|,
+\verb|\BDTOrange|,
+\verb|\BDTGreen|,
+\verb|\BDTBrown|.
+%
+The script also performs the test on files imported with the commands \verb|\include|, \verb|\input|, and \verb|\subfile|.
+%
+Thus, the program creates a new version of the document with  an analogous structure to the original project, which can be compiled as usual.
+The only requirement of the program is the package \verb|xcolor|.
+
+The script highlights by default all the sets of words. However, it is possible to choose the sets to highlight by including the initial of each color as options. The following options are accepted:
+\begin{description}
+ \item[r] Highlight words in red
+ \item[b] Highlight words in blue
+ \item[p] Highlight words in purple
+ \item[o] Highlight words in orange
+ \item[g] Highlight words in green
+ \item[B] Highlight words in brown
+\end{description}
+For instance, the following command performs the test highlight words with green and brown colors:
+%
+\begin{verbatim}
+python BDT_latex.py -gB {file.tex} 
+\end{verbatim}
+
+
+
+\section{Examples}
+
+The following are some examples of sentences that I was able to correct with the the Belcher Diagnostic test (as you might notice, my research is in cyber-security).  
+
+\begin{enumerate}
+ \item 
+\begin{description}
+ \item[Before:] A second attack might \BDTGreen{be} more difficult \BDTPurple{to} launch because \BDTPurple{of} scarce resources, \BDTBlue{which} \BDTGreen{are} \BDTBrown{particularly} \BDTGreen{limited} \BDTPurple{for} unlawful activities. 
+ 
+ \item[After:] A second attack might \BDTGreen{be} more difficult \BDTPurple{to} launch, because unlawful activities count \BDTPurple{with} scarce resources.
+ 
+ \item[Better:] Unlawful activities \BDTGreen{have} \BDTGreen{limited} resources, \BDTGreen{making} \BDTBlue{it} difficult \BDTPurple{to} launch a second attack.
+\end{description}
+
+
+\item
+\begin{description}
+ \item[Before:] \BDTGreen{Hence,} \BDTBlue{it} \BDTGreen{is} necessary \BDTPurple{to} \BDTGreen{implement} another mechanism \BDTPurple{to} assign contracts.
+ 
+ \item[After:] This motivates the \BDTGreen{implementation} \BDTPurple{of} another mechanism \BDTPurple{to} assign contracts.
+ 
+ \item[Better:] Companies must \BDTGreen{implement} another mechanism \BDTPurple{to} assign contracts.
+\end{description}
+
+
+\item
+\begin{description}
+ \item[Before:]  \BDTGreen{Hence,} efficiency \BDTGreen{is} \BDTGreen{expected} \BDTPurple{to} \BDTGreen{be} \BDTGreen{achieved} \BDTPurple{by} means \BDTPurple{of} an active
+\BDTGreen{cooperation} \BDTPurple{of} consumers \BDTPurple{in} the electricity systems.
+ 
+ \item[After:] \BDTGreen{Hence,} an active \BDTGreen{cooperation} \BDTPurple{of} costumers might improve the efficiency \BDTPurple{of} the system.
+ 
+ \item[Better:] \BDTGreen{Hence,} consumers \BDTBrown{actively} cooperating should improve the efficiency \BDTPurple{of} the electricity systems.
+\end{description}
+
+
+\item
+\begin{description}
+ \item[Before:] The \BDTGreen{transmission} company would try \BDTPurple{to} find the smallest number \BDTPurple{of} companies $n$ \BDTPurple{to} \BDTGreen{prevent} the profitability \BDTPurple{of} launching attacks \BDTRed{and} \BDTPurple{to} \BDTGreen{minimize} expenses.
+  
+ \item[After:] The \BDTGreen{transmission} company would choose $n$ companies \BDTPurple{to} \BDTGreen{make} attacks unprofitable \BDTPurple{with} minimum expenses.
+\end{description}
+
+
+\item 
+\begin{description}
+ \item[Before:] Towers \BDTGreen{were} \BDTBrown{not} \BDTBrown{totally} \BDTGreen{demolished,} just \BDTBrown{partially} \BDTGreen{destroyed} \BDTPurple{to} allow \BDTPurple{for} easier repairs.
+ 
+ \item[After:] Towers \BDTGreen{were} \BDTBrown{partially} \BDTGreen{damaged} \BDTPurple{to} allow both cheap \BDTRed{and} fast repairs.
+ 
+ \item[Better:] Attackers \BDTBrown{partially} \BDTGreen{damaged} towers \BDTPurple{to} allow both cheap \BDTRed{and} fast repairs.
+\end{description}
+
+
+\item
+\begin{description}
+ \item[Before:] Thus, the \BDTGreen{inclusion} \BDTPurple{of} a \BDTGreen{randomized} \BDTGreen{selection} \BDTPurple{of} contractors reduces the incentives \BDTPurple{for} \BDTGreen{sponsored} attacks.
+ 
+ \item[After:] Thus, random \BDTGreen{selection} \BDTPurple{of} contractors reduces the incentives \BDTPurple{for} \BDTGreen{sponsored} attacks.
+\end{description}
+
+
+\end{enumerate}
+
+
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
