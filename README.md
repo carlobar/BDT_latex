@@ -12,7 +12,7 @@ The script creates new TeX files with suffix `_BDT`  (e.g.,  `examples_BDT.tex`)
 
 ## Documentation
 
-The full documentation of the code is available at [here](https://github.com/carlobar/BDT_latex/blob/master/documentation).
+The full documentation of the code is available at [here](https://github.com/carlobar/BDT_latex/blob/master/docs/documentation.pdf).
 
 
 ## Requirements
