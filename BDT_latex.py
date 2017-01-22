@@ -1,3 +1,4 @@
+import os
 import sys
 import re
 
@@ -52,7 +53,6 @@ def find_words(list_w, color, text):
 		m_w = p_w.finditer(text)
 		for match_str in m_w:
 			match = match_str.group()
-			print(match)
 			# we have to find the matchd word, to allow upper case
 			p_word = re.compile(word, re.IGNORECASE)
 			m_word = p_word.search(match)
@@ -94,10 +94,11 @@ def open_file(name, mod):
 	name -- Name of the file
 	mod -- Modes 'r': read; 'w': write
 	"""
+	file_name = os.path.normpath(name)
 	try:
-		file_obj = open(name, mod)
+		file_obj = open(file_name, mod)
 	except:
-		print('Error opening the file '+name)
+		print('Error opening the file '+file_name)
 		exit()
 	return file_obj
 
@@ -113,6 +114,8 @@ def find_path(file_route):
 		path = m_path.group()
 	else:
 		path = ''
+	#print(file_route)
+	#print('the path is: '+path)
 	return path
 
 
@@ -350,7 +353,7 @@ p4 = re.compile('\s*\\\\subfile\s*\{[^\\\\]*\}')
 # comments
 p5 = re.compile('\s*\%')
 # path of a file
-p6 = re.compile('~?[\./\w\_\-]*/')
+p6 = re.compile('~?[\./\w\_\-\:\\\\]*[/\\\\]')
 # extension of a file
 p7 = re.compile('\.[\w\.]+')
 # find file name
